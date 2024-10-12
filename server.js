@@ -2,7 +2,7 @@ const app = require("./src/app")
 
 const PORT = 3035
 
-const server = app.listen(3050, () => {
+const server = app.listen(PORT, () => {
     console.log("Project start with PORT " + PORT)
 })
 

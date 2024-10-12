@@ -1,24 +1,42 @@
+require('dotenv').config()
 const express = require("express")
 const morgan = require("morgan")
 const helmet = require('helmet') //Bao mat
 const compression = require("compression")
 const app = express()
 
+console.log(process.env)
 // init middlewares
 app.use(morgan("dev"))
 app.use(helmet())
 app.use(compression())
+app.use(express.json())
+app.use(express.urlencoded({
+    extended:true
+}))
 
 // init db
 require('./dbs/init.mongodb')
-const {countConnect} = require('./helpers/check.connect')
+
 // init routes
-app.get("/", (req, res, next) => {
-    res.status(200).json({
-        message:"Welcome to PJ"
+app.use('',require('./routes') )
+
+// handling errors
+app.use((req, res, next) => {
+    const error = new Error('Not found')
+    error.status = 404
+    next(error)
+})
+
+app.use((error, req, res, next) => {
+    const statusCode = error.status || 500
+    return res.status(statusCode).json({
+        status:"error",
+        code: statusCode,
+        message:error.message || "Internal Sever Error"
     })
 })
 
-// handling errors
+
 module.exports = app
 
