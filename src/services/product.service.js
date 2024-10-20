@@ -1,1 +1,0 @@
-const {product, clothing, electronic} = require

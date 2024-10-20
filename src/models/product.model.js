@@ -8,8 +8,8 @@ const productSchema = new mongoose.Schema({
     product_thumb:{type:String, required:true},
     product_description:String,
     product_price:{type:Number, required:true},
-    product_type:{type:String, required:true, enum:['Electronics', 'Clothing','Funiture']},
-    product_shop:String,
+    product_type:{type:String, required:true, enum:['Electronics', 'Clothing','Funiture']}, 
+    product_shop:String, //  Loi nam o day, nho fix
     product_attributes:{type:mongoose.Schema.Types.Mixed, required:true},
 },{
     timestamps:true,
